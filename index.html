@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pregunas aleatorias</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+        crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/bootstrap-slider.min.js"
+        integrity="sha512-f0VlzJbcEB6KiW8ZVtL+5HWPDyW1+nJEjguZ5IVnSQkvZbwBt2RfCBY0CBO1PsMAqxxrG4Di6TfsCPP3ZRwKpA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/11.0.2/css/bootstrap-slider.min.css"
+        integrity="sha512-3q8fi8M0VS+X/3n64Ndpp6Bit7oXSiyCnzmlx6IDBLGlY5euFySyJ46RUlqIVs0DPCGOypqP8IRk/EyPvU28mQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+
+<body>
+    <div>Preguntas aleatoreas</div>
+    <div class="container">
+        <form action="your_page_here.php" id="myForm">
+            <input type="submit" class="btn btn-primary" />
+            <input type="reset" class="btn btn-info" />
+        </form>
+    </div>
+    <script>
+        $(function () {
+            var question_container = $('#myForm');
+            var datos = [];
+
+            question_container.on('submit', function (e) {
+                e.preventDefault();
+
+                var arrRadio = $('#myForm').serializeArray().map(function ( field ) {
+                    var { name, value } = field;
+                    if (name === 'range') {
+                        if (Number(value) <= 3) {
+                            value = 0;
+                        } else {
+                            value = 1;
+                        }
+                    }
+                    return Number(value);
+                })  
+            })
+
+            $.getJSON("checklist.json", function (data) {
+                $.each(data, function (i, descriptions) {
+                    var { descripcion, preguntas, id } = descriptions;
+                    var container = $('<div class="description">');
+                    var dHeader = $('<h1>').html(descripcion);
+                    question_container.append(container.append(dHeader));
+
+                    $.each(preguntas, function (p, questions) {
+                        var { desc_pre, mandatorio, id_pre, respuestas, type } = questions;
+                        var qHeader = $('<h3>').html(desc_pre);
+                        var question = $('<div class="questions">');
+                        qHeader.appendTo(question)
+                        question.appendTo(container);
+                        $.each(respuestas, function (a, answers) {
+                            var { name, value } = answers;
+                            var answer = $('<div class="answers">');
+                            if (type === 'radiobutton') {
+                                var ul = $('<ul class="list-unstyled">');
+                                var item = $('<li> ' + name + '</li>');
+                                var radio = $(`<input type="radio" name="radio-${id_pre}-${i}" value="${value}" />`);
+                                radio.prependTo(item);
+                                item.appendTo(ul);
+                                ul.appendTo(answer);
+                                answer.appendTo(question);
+                            } else if (type === 'range') {
+                                console.log(id)
+                                var range = $(`<input id="ex${id}${id_pre}${a}" name="range" type="text" />`);
+
+                                console.log(`#ex${id}${id_pre}${a}`)
+                                range.appendTo(answer);
+                                answer.appendTo(question);
+
+                                $(`#ex${id}${id_pre}${a}`).slider({
+                                    ticks: value,
+                                    ticks_labels: name,
+                                    ticks_snap_bounds: 10,
+                                    formatter: function (value) {
+                                        return 'Current value: ' + value;
+                                    }
+                                });
+                            } else if (type === 'text') {
+                                var text = $(`<input type="text" value="" class="form-control" />`);
+                                text.appendTo(answer);
+                                answer.appendTo(question);
+                            } else if (type === 'select-comentario') {
+
+                                if (name === 'select') {
+                                    var select = $(`<select class="form-control">`).appendTo(answer);
+                                    $(value).each(function (o, options) {
+                                        var { name, value } = options;
+                                        select.append($("<option>").attr('value', value).text(name));
+                                    })
+                                    answer.appendTo(question);
+
+                                } else if (name === 'text') {
+                                    var text = $(`<input type="text" value="" class="form-control" />`);
+                                    text.appendTo(answer);
+                                    answer.appendTo(question);
+                                }
+                            } else if (type === 'radiobutton-text') {
+                                var ul = $('<ul class="list-unstyled">');
+                                var item = $('<li> ' + name + '</li>');
+                                var radio = $('<input type="radio" id="" name="description[' + i + ']" value="' + answers.value + '" />');
+                                radio.prependTo(item);
+                                item.appendTo(ul);
+                                ul.appendTo(answer);
+                                answer.appendTo(question);
+                            }
+                        })
+                    });
+                });
+            });
+        })
+    </script>
+</body>
+
+</html>

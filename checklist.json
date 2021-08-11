@@ -1,0 +1,176 @@
+[
+	{
+		"id": 1,
+		"descripcion": "Implementos de seguridad y calidad",
+		"preguntas": [
+			{
+				"id_pre": 1,
+				"desc_pre": "Cinturón de Seguridad operativo",
+				"respuestas": [
+					{
+						"name": "Si",
+						"value": 1
+					},				
+					{
+						"name": "No",
+						"value": 0
+					}
+				],
+				"type": "radiobutton",
+				"mandatorio": 0
+			},
+			{
+				"id_pre": 2,
+				"desc_pre": "Cinturón de Seguridad operativo 1",
+				"respuestas": [
+					{
+						"name": "Si",
+						"value": 1
+					},				
+					{
+						"name": "No",
+						"value": 0
+					}
+				],
+				"type": "radiobutton",
+				"mandatorio": 0
+			},
+			{
+				"id_pre": 3,
+				"desc_pre": "Cinturón de Seguridad operativo 2",
+				"respuestas": [
+					{
+						"name": "Si",
+						"value": 1
+					},				
+					{
+						"name": "No",
+						"value": 0
+					}
+				],
+				"type": "radiobutton",
+				"mandatorio": 0
+			},
+			{
+				"id_pre": 4,
+				"desc_pre": "Nivel  Aceite de motor 4",
+				"respuestas": [
+					{
+						"name": ["Ins.", "Int.", "Me.", "lle.", "full"],
+						"value": [1,2,3,4,5]
+					}
+							
+				],
+				"type": "range",
+				"mandatorio": 0
+			},
+			{
+				"id_pre": 5,
+				"desc_pre": "Nivel  Aceite de motor 4",
+				"respuestas": [
+					{
+						"name": ["1", "2", "Me.", "lle.", "full", "se"],
+						"value": [1,2,3,4,5,6]
+					}
+							
+				],
+				"type": "range",
+				"mandatorio": 0
+			}
+		]
+	},
+	{
+		"id": 2,
+		"descripcion": "Luces y elementos sonoros",
+		"preguntas": [
+			{
+				"id_pre": 3,
+				"desc_pre": "Cinturón de Seguridad operativo",
+				"respuestas": [
+					{
+						"name": "texto",
+						"value": ""
+					}				
+				],
+				"type": "text",
+				"mandatorio": 1
+			},
+			{
+				"id_pre": 4,
+				"desc_pre": "En la escala del 1 al 10, cómo califica la calidad de nuestro servicio de despacho a nivel general",
+				"respuestas": [
+					{
+						"name": ["Insatisfecho", "intermedio", "medio", "lleno", "full", "Insatisfe", "intero", "med", "llno", "fll"],
+						"value": [1,2,3,4,5,6,7,8,9,10]
+					}
+				],
+				"type": "range",
+				"mandatorio": 0
+			}
+		]
+	},
+	{
+		"id": 3,
+		"descripcion": "Capacidad de carga",
+		"preguntas": [
+			{
+				"id_pre": 5,
+				"desc_pre": "Cómo calificaría el servicio y nivel de conocimiento del personal de despacho que lo atendió",
+				"respuestas": [
+					{
+						"name": "Excelente",
+						"value": 1
+					},
+					{
+						"name": "Bueno",
+						"value": 2
+					},
+					{
+						"name": "Regular",
+						"value": 3
+					},
+					{
+						"name": "Deficiente",
+						"value": 4
+					}				
+				],
+				"type": "radiobutton-text", 
+				"mandatorio": 1
+			},
+			{
+				"id_pre": 6,
+				"desc_pre": "En la escala del 1 al 10, cómo califica la calidad de nuestro servicio de despacho a nivel general",
+				"respuestas": [
+					{
+						"name": "select",
+						"value": [
+							{
+								"name": "Servicio de despacho llegó tarde o no llegó",
+								"value": 1 
+							},
+							{
+								"name": "Cantidad incorrecta de despacho",
+								"value": 2
+							},
+							{
+								"name": "Productos equivocados o en mal estado",
+								"value": 3 
+							},
+							{
+								"name": "Problemas relacionados con la actitud del personal de despacho",
+								"value": 14
+							}
+						]
+					}, 
+					{
+						"name": "text",
+						"value": ""
+					}
+									
+				],
+				"type": "select-comentario",
+				"mandatorio": 0
+			}
+		]
+	} 
+]
